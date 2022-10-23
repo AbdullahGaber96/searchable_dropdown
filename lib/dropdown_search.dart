@@ -158,12 +158,16 @@ class DropdownSearch<T> extends StatefulWidget {
   ///if the callBack return FALSE, the opening of the popup will be cancelled
   final BeforePopupOpening<T>? onBeforePopupOpening;
 
+  // customized Submit Button ...
+  final Widget? submitWidget;
+
   ///a callBack will be called before opening le popup
   ///if the callBack return FALSE, the opening of the popup will be cancelled
   final BeforePopupOpeningMultiSelection<T>? onBeforePopupOpeningMultiSelection;
 
   DropdownSearch({
     Key? key,
+    this.submitWidget,
     this.onSaved,
     this.validator,
     this.autoValidateMode = AutovalidateMode.disabled,
@@ -200,6 +204,7 @@ class DropdownSearch<T> extends StatefulWidget {
     Key? key,
     this.autoValidateMode = AutovalidateMode.disabled,
     this.items = const [],
+    this.submitWidget,
     this.asyncItems,
     this.dropdownDecoratorProps = const DropDownDecoratorProps(),
     this.clearButtonProps = const ClearButtonProps(),
@@ -657,6 +662,7 @@ class DropdownSearchState<T> extends State<DropdownSearch<T>> {
       filterFn: widget.filterFn,
       items: widget.items,
       asyncItems: widget.asyncItems,
+      submitWidget: widget.submitWidget,
       onChanged: _handleOnChangeSelectedItems,
       compareFn: widget.compareFn,
       isMultiSelectionMode: isMultiSelectionMode,

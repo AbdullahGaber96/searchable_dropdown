@@ -17,9 +17,11 @@ class SelectionWidget<T> extends StatefulWidget {
   final List<T> defaultSelectedItems;
   final PopupPropsMultiSelection<T> popupProps;
   final bool isMultiSelectionMode;
+  final Widget? submitWidget;
 
   const SelectionWidget({
     Key? key,
+    this.submitWidget,
     required this.popupProps,
     this.defaultSelectedItems = const [],
     this.isMultiSelectionMode = false,
@@ -228,16 +230,21 @@ class SelectionWidgetState<T> extends State<SelectionWidget<T>> {
   Widget _multiSelectionValidation() {
     if (!widget.isMultiSelectionMode) return SizedBox.shrink();
 
-    Widget defaultValidation = Padding(
-      padding: EdgeInsets.all(8),
-      child: Align(
-        alignment: Alignment.centerRight,
-        child: ElevatedButton(
-          onPressed: onValidate,
-          child: Text("OK"),
-        ),
-      ),
-    );
+    Widget defaultValidation = widget.submitWidget != null
+        ? InkWell(
+            onTap: onValidate,
+            child: widget.submitWidget,
+          )
+        : Padding(
+            padding: EdgeInsets.all(8),
+            child: Align(
+              alignment: Alignment.centerRight,
+              child: ElevatedButton(
+                onPressed: onValidate,
+                child: Text("OK"),
+              ),
+            ),
+          );
 
     if (widget.popupProps.validationWidgetBuilder != null) {
       return widget.popupProps.validationWidgetBuilder!(
